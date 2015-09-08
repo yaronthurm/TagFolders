@@ -37,9 +37,9 @@
             // pictureBox1
             // 
             this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox1.Location = new System.Drawing.Point(3, 0);
+            this.pictureBox1.Location = new System.Drawing.Point(4, 1);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(90, 90);
+            this.pictureBox1.Size = new System.Drawing.Size(87, 87);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
@@ -48,7 +48,7 @@
             // 
             this.lblFileName.AutoSize = true;
             this.lblFileName.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
-            this.lblFileName.Location = new System.Drawing.Point(99, 10);
+            this.lblFileName.Location = new System.Drawing.Point(99, 13);
             this.lblFileName.Name = "lblFileName";
             this.lblFileName.Size = new System.Drawing.Size(80, 20);
             this.lblFileName.TabIndex = 1;
@@ -56,10 +56,11 @@
             // 
             // panel
             // 
+            this.panel.AutoScroll = true;
             this.panel.BackColor = System.Drawing.Color.Transparent;
             this.panel.Location = new System.Drawing.Point(103, 43);
             this.panel.Name = "panel";
-            this.panel.Size = new System.Drawing.Size(344, 44);
+            this.panel.Size = new System.Drawing.Size(232, 44);
             this.panel.TabIndex = 2;
             // 
             // LargeFileWithTag
@@ -67,12 +68,13 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Transparent;
-            this.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.Controls.Add(this.panel);
             this.Controls.Add(this.lblFileName);
             this.Controls.Add(this.pictureBox1);
             this.Name = "LargeFileWithTag";
-            this.Size = new System.Drawing.Size(450, 90);
+            this.Size = new System.Drawing.Size(348, 94);
+            this.MouseEnter += new System.EventHandler(this.LargeFileWithTag_MouseEnter);
+            this.MouseLeave += new System.EventHandler(this.LargeFileWithTag_MouseLeave);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

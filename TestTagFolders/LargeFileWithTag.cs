@@ -31,5 +31,15 @@ namespace TestTagFolders
                 this.panel.Controls.Add(button);
             }
         }
+
+        private void LargeFileWithTag_MouseEnter(object sender, EventArgs e)
+        {
+            this.BackColor = Color.AliceBlue;
+        }
+
+        private void LargeFileWithTag_MouseLeave(object sender, EventArgs e)
+        {
+            this.BackColor = Color.Transparent;
+        }
     }
 }

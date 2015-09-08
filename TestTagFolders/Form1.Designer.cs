@@ -30,7 +30,7 @@
         {
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.listTags = new System.Windows.Forms.ListView();
-            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.filesPanel1 = new TestTagFolders.FilesPanel();
             this.SuspendLayout();
             // 
             // textBox1
@@ -50,21 +50,21 @@
             this.listTags.UseCompatibleStateImageBehavior = false;
             this.listTags.View = System.Windows.Forms.View.List;
             // 
-            // flowLayoutPanel1
+            // filesPanel1
             // 
-            this.flowLayoutPanel1.AutoScroll = true;
-            this.flowLayoutPanel1.BackColor = System.Drawing.Color.White;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(249, 48);
-            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(467, 377);
-            this.flowLayoutPanel1.TabIndex = 4;
+            this.filesPanel1.BackColor = System.Drawing.Color.White;
+            this.filesPanel1.Location = new System.Drawing.Point(12, 48);
+            this.filesPanel1.Name = "filesPanel1";
+            this.filesPanel1.Size = new System.Drawing.Size(838, 369);
+            this.filesPanel1.TabIndex = 0;
+            this.filesPanel1.Load += new System.EventHandler(this.filesPanel1_Load);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(724, 465);
-            this.Controls.Add(this.flowLayoutPanel1);
+            this.ClientSize = new System.Drawing.Size(874, 465);
+            this.Controls.Add(this.filesPanel1);
             this.Controls.Add(this.listTags);
             this.Controls.Add(this.textBox1);
             this.Name = "Form1";
@@ -79,6 +79,6 @@
 
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.ListView listTags;
-        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
+        private FilesPanel filesPanel1;
     }
 }
