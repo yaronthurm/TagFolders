@@ -89,7 +89,7 @@ namespace TestTagFolders
                 .Take(PageSize)
                 .Select(x =>
             {
-                var fileWithTags = FilesWithTagsRepository.GetOrCreate(x);
+                var fileWithTags = TaggedFile.Repository.GetOrCreate(x);
                 var item = new LargeFileWithTag();
                 var shellFile = ShellFile.FromFilePath(x);
                 shellFile.Thumbnail.FormatOption = ShellThumbnailFormatOption.Default;

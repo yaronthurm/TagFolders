@@ -13,12 +13,12 @@ namespace TestTagFolders
     {
         public static void Play()
         {
-            var e1 = new FilesWereTagged { FileNames = new[] { "file1", "file2" }, TagNames = new[] { "tag1", "tag2" } };
-            var e2 = new FilesWereTagged { FileNames = new[] { "file1", "file2" }, TagNames = new[] { "tag11", "tag22" } };
-            var e3 = new FilesWereTagged { FileNames = new[] { "file1", "file3" }, TagNames = new[] { "tag3", "tag4" } };
-            var e4 = new FilesWereTagged { FileNames = new[] { "file4", "file5" }, TagNames = new[] { "tag1", "tag4" } };
+            var e1 = new TagsWereAddedToFiles { FileNames = new[] { "file1", "file2" }, TagsThatWereAdded = new[] { "tag1", "tag2" } };
+            var e2 = new TagsWereAddedToFiles { FileNames = new[] { "file1", "file2" }, TagsThatWereAdded = new[] { "tag11", "tag22" } };
+            var e3 = new TagsWereAddedToFiles { FileNames = new[] { "file1", "file3" }, TagsThatWereAdded = new[] { "tag3", "tag4" } };
+            var e4 = new TagsWereAddedToFiles { FileNames = new[] { "file4", "file5" }, TagsThatWereAdded = new[] { "tag1", "tag4" } };
             var e5 = new TagRenamed { OldValue = "tag1", NewValue = "tag10" };
-            var e6 = new FilesWereUnTagged { FileNames = new[] { "file1", "file2" }, TagNames = new[] { "tag2" } };
+            var e6 = new TagsWereRemovedFromFiles { FileNames = new[] { "file1", "file2" }, TagsThatWereRemoved = new[] { "tag2" } };
             var e7 = new FileRenamed { OldValue = "file1", NewValue = "file10" };
 
             Event[] events = { e1, e2, e3, e4, e5, e6 };
@@ -28,7 +28,7 @@ namespace TestTagFolders
                 processor.ProcessEvent();
             }
 
-            var state = State.Populate(FilesWithTagsRepository.GetFilesList());
+            var state = State.Populate(TaggedFile.Repository.GetFilesList());
 
 
             var filter = new TagsIntersectionCondition(
@@ -59,7 +59,7 @@ namespace TestTagFolders
 
 
         private Dictionary<Tag, int /*count*/> _tags = new Dictionary<Tag, int>();
-        private List<FileWithTags> _files = new List<FileWithTags>();
+        private List<TaggedFile> _files = new List<TaggedFile>();
 
         private static string _filename = "D:\\tags.txt";
 
@@ -84,7 +84,7 @@ namespace TestTagFolders
             File.AppendAllLines(_filename, new[] { text });
         }
 
-        public static State Populate(List<FileWithTags> files)
+        public static State Populate(List<TaggedFile> files)
         {
             var ret = new State();
             ret._files.AddRange(files);
@@ -106,7 +106,7 @@ namespace TestTagFolders
         }
 
 
-        public List<FileWithTags> GetFiles()
+        public List<TaggedFile> GetFiles()
         {
             return _files;
         }
@@ -130,14 +130,14 @@ namespace TestTagFolders
             this.Items = items.ToList();
         }
 
-        public List<FileWithTags> Apply(List<FileWithTags> source)
+        public List<TaggedFile> Apply(List<TaggedFile> source)
         {
             var ret = source.Where(x => this.IsMatchAll(x.Tags)).ToList();
             return ret;
         }
 
 
-        private bool IsMatchAll(List<Tag> source)
+        private bool IsMatchAll(IEnumerable<Tag> source)
         {
             foreach (TagsUnionCondition unionCondition in this.Items)
             {
@@ -157,7 +157,7 @@ namespace TestTagFolders
             this.Items = items.ToList();
         }
 
-        public bool IsMatch(List<Tag> source){    
+        public bool IsMatch(IEnumerable<Tag> source){    
             foreach (InversableTag itag in this.Items){
                 bool sourceContainsCurrent = source.Contains(itag.Tag);
                 if (itag.Inverse && !sourceContainsCurrent) 
@@ -177,26 +177,45 @@ namespace TestTagFolders
         //public DateTime Time = DateTime.UtcNow;
     }
 
-    public class FilesWereTagged : Event, IEventProcessor
+    public class TagsWereAddedToFiles : Event, IEventProcessor
     {
         public string[] FileNames;
-        public string[] TagNames;
+        public string[] TagsThatWereAdded;
 
         public void ProcessEvent()
         {            
             foreach (string fileName in this.FileNames)
             {
-                var file = FilesWithTagsRepository.GetOrCreate(fileName);
-                foreach (string tagName in this.TagNames)
+                var file = TaggedFile.Repository.GetOrCreate(fileName);
+                foreach (string tagName in this.TagsThatWereAdded)
                 {
-                    var tag = TagsRepository.GetOrCreate(tagName);
+                    var tag = Tag.Repository.GetOrCreate(tagName);
                     file.Tags.Add(tag);
                 }
             }
         }
     }
 
-    public class FilesWereUnTagged : Event, IEventProcessor
+    public class TagsWereRemovedFromFiles : Event, IEventProcessor
+    {
+        public string[] FileNames;
+        public string[] TagsThatWereRemoved;
+
+        public void ProcessEvent()
+        {
+            foreach (string fileName in this.FileNames)
+            {
+                var file = TaggedFile.Repository.GetOrCreate(fileName);
+                foreach (string tagName in this.TagsThatWereRemoved)
+                {
+                    var tag = Tag.Repository.GetOrCreate(tagName);
+                    file.Tags.Remove(tag);
+                }
+            }
+        }
+    }
+
+    public class TagsWereUpdatedForSomeFiles : Event, IEventProcessor
     {
         public string[] FileNames;
         public string[] TagNames;
@@ -205,11 +224,12 @@ namespace TestTagFolders
         {
             foreach (string fileName in this.FileNames)
             {
-                var file = FilesWithTagsRepository.GetOrCreate(fileName);
+                var file = TaggedFile.Repository.GetOrCreate(fileName);
+                file.Tags.Clear();
                 foreach (string tagName in this.TagNames)
                 {
-                    var tag = TagsRepository.GetOrCreate(tagName);
-                    file.Tags.Remove(tag);
+                    var tag = Tag.Repository.GetOrCreate(tagName);
+                    file.Tags.Add(tag);
                 }
             }
         }
@@ -222,7 +242,7 @@ namespace TestTagFolders
 
         public void ProcessEvent()
         {
-            TagsRepository.Rename(OldValue, NewValue);
+            Tag.Repository.Rename(OldValue, NewValue);
         }
     }
 
@@ -233,7 +253,7 @@ namespace TestTagFolders
 
         public void ProcessEvent()
         {
-            FilesWithTagsRepository.Rename(OldValue, NewValue);
+            TaggedFile.Repository.Rename(OldValue, NewValue);
         }
     }
 
@@ -247,11 +267,43 @@ namespace TestTagFolders
     #region Tags and files
     public class Tag
     {
-        public string Value;
+        public string Value {get; private set;}
+
+        private Tag(string value)
+        {
+            this.Value = value;
+        }
+
 
         public override string ToString()
         {
             return Value;
+        }
+
+
+        public class Repository
+        {
+            private static ConcurrentDictionary<string, Tag> _tags = new ConcurrentDictionary<string, Tag>();
+
+            public static Tag GetOrCreate(string tagValue)
+            {
+                var ret = _tags.GetOrAdd(tagValue, x => new Tag(x));
+                return ret;
+            }
+
+            public static void Rename(string oldValue, string newValue)
+            {
+                Tag tag;
+                if (_tags.TryRemove(oldValue, out tag))
+                {
+                    tag.Value = newValue;
+                    _tags[newValue] = tag;
+                }
+                else
+                {
+                    throw new ApplicationException(string.Format("tag '{0}' does not exist", oldValue));
+                }
+            }
         }
     }
 
@@ -262,11 +314,11 @@ namespace TestTagFolders
 
 
         public static InversableTag GetTag(string value){
-            return new InversableTag{ Tag= TagsRepository.GetOrCreate(value), Inverse = false};
+            return new InversableTag{ Tag= Tag.Repository.GetOrCreate(value), Inverse = false};
         }
 
         public static InversableTag GetInverseTag(string value){
-            return new InversableTag{ Tag= TagsRepository.GetOrCreate(value), Inverse = true};
+            return new InversableTag{ Tag= Tag.Repository.GetOrCreate(value), Inverse = true};
         }
 
         public override string ToString()
@@ -280,74 +332,54 @@ namespace TestTagFolders
 
 
 
-    public class FileWithTags
-    {
-        public string FileName;
-        public List<Tag> Tags;
+    public class TaggedFile
+    {        
+        public List<Tag> Tags { get; private set; }
+        public string FileName {get; private set;}
+        
+
+        private TaggedFile(string filename)
+        {
+            this.Tags = new List<Tag>();
+            this.FileName = filename;
+        }
 
         public override string ToString()
         {
             return "File: " + FileName + " (Tags: " + string.Join(",", Tags.Select(x => x.Value)) + ")";
         }
-    }
-    #endregion
 
-
-    #region Repositories
-    public class TagsRepository
-    {
-        private static ConcurrentDictionary<string, Tag> _tags = new ConcurrentDictionary<string,Tag>();
-
-        public static Tag GetOrCreate(string tagValue)
+        public class Repository
         {
-            var ret = _tags.GetOrAdd(tagValue, x => new Tag { Value = x });
-            return ret;
-        }
+            private static ConcurrentDictionary<string, TaggedFile> _filesWithTags = new ConcurrentDictionary<string, TaggedFile>();
 
-        public static void Rename(string oldValue, string newValue)
-        {
-            Tag tag;
-            if (_tags.TryRemove(oldValue, out tag))
+            public static TaggedFile GetOrCreate(string filename)
             {
-                tag.Value = newValue;
-                _tags[newValue] = tag;
+                var ret = _filesWithTags.GetOrAdd(filename, x => new TaggedFile(x));
+                return ret;
             }
-            else
+
+            public static void Rename(string oldValue, string newValue)
             {
-                throw new ApplicationException(string.Format("tag '{0}' does not exist", oldValue));
+                TaggedFile tag;
+                if (_filesWithTags.TryRemove(oldValue, out tag))
+                {
+                    tag.FileName = newValue;
+                    _filesWithTags[newValue] = tag;
+                }
+                else
+                {
+                    throw new ApplicationException(string.Format("file '{0}' does not exist", oldValue));
+                }
             }
-        }
-    }
 
-    public class FilesWithTagsRepository
-    {
-        private static ConcurrentDictionary<string, FileWithTags> _filesWithTags = new ConcurrentDictionary<string,FileWithTags>();
 
-        public static FileWithTags GetOrCreate(string filename)
-        {
-            var ret = _filesWithTags.GetOrAdd(filename, x => new FileWithTags { FileName = x, Tags = new List<Tag>() });
-            return ret;
-        }
-
-        public static void Rename(string oldValue, string newValue)
-        {
-            FileWithTags tag;
-            if (_filesWithTags.TryRemove(oldValue, out tag))
+            public static List<TaggedFile> GetFilesList()
             {
-                tag.FileName = newValue;
-                _filesWithTags[newValue] = tag;
+                return _filesWithTags.Values.ToList();
             }
-            else
-            {
-                throw new ApplicationException(string.Format("file '{0}' does not exist", oldValue));
-            }
-        }
-
-
-        public static List<FileWithTags> GetFilesList()
-        {
-            return _filesWithTags.Values.ToList();
         }
     }
+
     #endregion
 }

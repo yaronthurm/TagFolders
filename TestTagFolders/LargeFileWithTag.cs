@@ -13,7 +13,7 @@ namespace TestTagFolders
 {
     public partial class LargeFileWithTag : UserControl
     {
-        private FileWithTags _file;
+        private TaggedFile _file;
 
         public LargeFileWithTag()
         {
@@ -21,7 +21,7 @@ namespace TestTagFolders
         }
 
 
-        public void SetData(Bitmap thumbnail, FileWithTags file)
+        public void SetData(Bitmap thumbnail, TaggedFile file)
         {
             _file = file;
 
@@ -55,7 +55,7 @@ namespace TestTagFolders
             var addTagsForm = new AddTagsForm();
             addTagsForm.SetApplyCallback(tags =>
                 {
-                    var ev = new FilesWereTagged { FileNames = new[] { _file.FileName }, TagNames = tags.ToArray() };
+                    var ev = new TagsWereAddedToFiles { FileNames = new[] { _file.FileName }, TagsThatWereAdded = tags.ToArray() };
                     State.AddAndSaveEvent(ev);
                     
 
