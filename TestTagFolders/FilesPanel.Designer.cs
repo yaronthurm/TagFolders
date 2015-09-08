@@ -38,12 +38,14 @@
             // 
             // flowLayoutPanel1
             // 
+            this.flowLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.flowLayoutPanel1.AutoScroll = true;
             this.flowLayoutPanel1.BackColor = System.Drawing.Color.Transparent;
-            this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 32);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 41);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(350, 287);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(440, 355);
             this.flowLayoutPanel1.TabIndex = 0;
             // 
             // btnNext
@@ -111,7 +113,7 @@
             this.Controls.Add(this.btnNext);
             this.Controls.Add(this.flowLayoutPanel1);
             this.Name = "FilesPanel";
-            this.Size = new System.Drawing.Size(350, 319);
+            this.Size = new System.Drawing.Size(440, 399);
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

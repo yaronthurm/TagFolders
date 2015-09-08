@@ -55,7 +55,7 @@
             this.filesPanel1.BackColor = System.Drawing.Color.White;
             this.filesPanel1.Location = new System.Drawing.Point(12, 48);
             this.filesPanel1.Name = "filesPanel1";
-            this.filesPanel1.Size = new System.Drawing.Size(838, 369);
+            this.filesPanel1.Size = new System.Drawing.Size(838, 322);
             this.filesPanel1.TabIndex = 0;
             this.filesPanel1.Load += new System.EventHandler(this.filesPanel1_Load);
             // 
