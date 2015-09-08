@@ -1,0 +1,133 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{711F1B97-40AA-4862-A166-B414D9C58D39}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>YaronThurm.TagFolders</RootNamespace>
+    <AssemblyName>YaronThurm.TagFolders</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SignAssembly>false</SignAssembly>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>3.5</OldToolsVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ExpTreeLib, Version=2.11.4288.27275, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Downloads\ExpTree_src\ExpTree\Version211\VS2005\ExpTreeLib\bin\ExpTreeLib.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ObjectListView, Version=2.2.1.32396, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\Desktop\1\ObjectListViewFull-2.2.1\ObjectListView\bin\Release\ObjectListView.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="YaronThurm.Controls, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\YaronThurm.Controls\YaronThurm.Controls\bin\Release\YaronThurm.Controls.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Code\FlashTrackBar.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Code\FileTag.cs" />
+    <Compile Include="Code\FileWithTags.cs" />
+    <Compile Include="Code\BrowseTagsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Code\BrowseTagsForm.Designer.cs">
+      <DependentUpon>BrowseTagsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Code\IconExtractor.cs" />
+    <Compile Include="Code\ManageTagsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Code\ManageTagsForm.Designer.cs">
+      <DependentUpon>ManageTagsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Code\RaisingEventsList.cs" />
+    <Compile Include="Code\SortedList2.cs" />
+    <Compile Include="Code\SQL_Manager.cs" />
+    <Compile Include="Code\StringExtension.cs" />
+    <Compile Include="Code\TagFilesDatabase.cs" />
+    <Compile Include="Code\TagsCombinationViewer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Code\TagsCombinationViewer.Designer.cs">
+      <DependentUpon>TagsCombinationViewer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Code\TagsCombinaton.cs" />
+    <Compile Include="Code\TagsListView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Code\TagsListWraper.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Code\BrowseTagsForm.resx">
+      <DependentUpon>BrowseTagsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Code\ManageTagsForm.resx">
+      <DependentUpon>ManageTagsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Code\TagsCombinationViewer.resx">
+      <DependentUpon>TagsCombinationViewer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Code\TagsListView.resx">
+      <DependentUpon>TagsListView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\חזור1.jpg" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
