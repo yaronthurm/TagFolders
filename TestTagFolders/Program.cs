@@ -12,16 +12,18 @@ namespace TestTagFolders
         [STAThread]
         static void Main()
         {
-            TagsPlayground.Play();
-            return;
+            //TagsPlayground.Play();
+            //return;
 
             //string ext = "C:\\cjh cjckd\\test.txt.exe1234".GetFileExtension();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            YaronThurm.TagFolders.BrowseTagsForm f = new YaronThurm.TagFolders.BrowseTagsForm();           
+            //YaronThurm.TagFolders.BrowseTagsForm f = new YaronThurm.TagFolders.BrowseTagsForm();           
             //f.SetToFolderContent("D:\\heroes");
-            Application.Run(f);
+            //Application.Run(f);
+
+            Application.Run(new Form1());
         }
     }
 }
