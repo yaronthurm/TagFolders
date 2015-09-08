@@ -89,10 +89,11 @@ namespace TestTagFolders
                 .Take(PageSize)
                 .Select(x =>
             {
+                var fileWithTags = FilesWithTagsRepository.GetOrCreate(x);
                 var item = new LargeFileWithTag();
                 var shellFile = ShellFile.FromFilePath(x);
                 shellFile.Thumbnail.FormatOption = ShellThumbnailFormatOption.Default;
-                item.SetData(shellFile.Thumbnail.MediumBitmap, x, new[] { "tag1", "tag2", "tag3", "tag4" });
+                item.SetData(shellFile.Thumbnail.MediumBitmap, fileWithTags);
                 return item;
             }).ToArray();
 

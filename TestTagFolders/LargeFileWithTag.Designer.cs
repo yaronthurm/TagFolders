@@ -31,6 +31,7 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.lblFileName = new System.Windows.Forms.Label();
             this.panel = new System.Windows.Forms.FlowLayoutPanel();
+            this.btnAddTag = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -63,16 +64,27 @@
             this.panel.Size = new System.Drawing.Size(232, 44);
             this.panel.TabIndex = 2;
             // 
+            // btnAddTag
+            // 
+            this.btnAddTag.Location = new System.Drawing.Point(341, 43);
+            this.btnAddTag.Name = "btnAddTag";
+            this.btnAddTag.Size = new System.Drawing.Size(23, 23);
+            this.btnAddTag.TabIndex = 3;
+            this.btnAddTag.Text = "+";
+            this.btnAddTag.UseVisualStyleBackColor = true;
+            this.btnAddTag.Click += new System.EventHandler(this.btnAddTag_Click);
+            // 
             // LargeFileWithTag
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Transparent;
+            this.Controls.Add(this.btnAddTag);
             this.Controls.Add(this.panel);
             this.Controls.Add(this.lblFileName);
             this.Controls.Add(this.pictureBox1);
             this.Name = "LargeFileWithTag";
-            this.Size = new System.Drawing.Size(348, 94);
+            this.Size = new System.Drawing.Size(376, 94);
             this.MouseEnter += new System.EventHandler(this.LargeFileWithTag_MouseEnter);
             this.MouseLeave += new System.EventHandler(this.LargeFileWithTag_MouseLeave);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
@@ -86,5 +98,6 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label lblFileName;
         private System.Windows.Forms.FlowLayoutPanel panel;
+        private System.Windows.Forms.Button btnAddTag;
     }
 }

@@ -4,6 +4,8 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using YaronThurm.TagFolders;
+using System.IO;
+using Newtonsoft.Json;
 
 namespace TestTagFolders
 {
@@ -47,9 +49,40 @@ namespace TestTagFolders
 
     public class State
     {
+        private static JsonSerializerSettings settings = new Newtonsoft.Json.JsonSerializerSettings
+        {
+            TypeNameHandling = Newtonsoft.Json.TypeNameHandling.All,
+            Formatting = Newtonsoft.Json.Formatting.None,
+            NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore,
+            MetadataPropertyHandling = Newtonsoft.Json.MetadataPropertyHandling.ReadAhead
+        };
+
+
         private Dictionary<Tag, int /*count*/> _tags = new Dictionary<Tag, int>();
         private List<FileWithTags> _files = new List<FileWithTags>();
 
+        private static string _filename = "D:\\tags.txt";
+
+
+        public static void LoadFromFile()
+        {
+            if (File.Exists(_filename))
+            {
+                var events = File.ReadAllLines(_filename)
+                    .Select(x => Newtonsoft.Json.JsonConvert.DeserializeObject<Event>(x, settings));
+                foreach (var ev in events)
+                {
+                    var processor = ev as IEventProcessor;
+                    processor.ProcessEvent();
+                }
+            }
+        }
+
+        public static void AppendEventToFile(Event ev)
+        {
+            var text = Newtonsoft.Json.JsonConvert.SerializeObject(ev, settings);
+            File.AppendAllLines(_filename, new[] { text });
+        }
 
         public static State Populate(List<FileWithTags> files)
         {
@@ -76,6 +109,13 @@ namespace TestTagFolders
         public List<FileWithTags> GetFiles()
         {
             return _files;
+        }
+
+        internal static void AddAndSaveEvent(Event ev)
+        {
+            var processor = ev as IEventProcessor;
+            processor.ProcessEvent();
+            State.AppendEventToFile(ev);
         }
     }
 

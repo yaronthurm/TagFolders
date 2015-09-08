@@ -12,6 +12,7 @@ namespace TestTagFolders
         [STAThread]
         static void Main()
         {
+            State.LoadFromFile();
             //TagsPlayground.Play();
             //return;
 
