@@ -13,7 +13,7 @@ namespace TestTagFolders
 {
     public partial class FilesPanel : UserControl
     {
-        private List<string> _files;
+        private List<TaggedFile> _files;
         private int _currentPage;
 
         public FilesPanel()
@@ -39,7 +39,7 @@ namespace TestTagFolders
             }
         }
 
-        public void PopulateFiles(IEnumerable<string> files)
+        public void PopulateFiles(IEnumerable<TaggedFile> files)
         {
             _files = files.ToList();
             if (_files.Count < PageSize)
@@ -89,11 +89,10 @@ namespace TestTagFolders
                 .Take(PageSize)
                 .Select(x =>
             {
-                var fileWithTags = TaggedFile.Repository.GetOrCreate(x);
                 var item = new LargeFileWithTag();
-                var shellFile = ShellFile.FromFilePath(x);
+                var shellFile = ShellFile.FromFilePath(x.FileName);
                 shellFile.Thumbnail.FormatOption = ShellThumbnailFormatOption.Default;
-                item.SetData(shellFile.Thumbnail.MediumBitmap, fileWithTags);
+                item.SetData(shellFile.Thumbnail.MediumBitmap, x);
                 return item;
             }).ToArray();
 

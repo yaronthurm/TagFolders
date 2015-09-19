@@ -111,6 +111,11 @@ namespace TestTagFolders
             return _files;
         }
 
+        public Dictionary<Tag, int /*count*/> GetTags()
+        {
+            return _tags;
+        }
+
         internal static void AddAndSaveEvent(Event ev)
         {
             var processor = ev as IEventProcessor;
@@ -125,17 +130,36 @@ namespace TestTagFolders
     {
         public List<TagsUnionCondition> Items;
 
+        public TagsIntersectionCondition()
+        {
+            this.Items = new List<TagsUnionCondition>();
+        }
+
         public TagsIntersectionCondition(params TagsUnionCondition[] items)
         {
             this.Items = items.ToList();
         }
 
-        public List<TaggedFile> Apply(List<TaggedFile> source)
+
+        public List<TaggedFile> Apply(IEnumerable<TaggedFile> source)
         {
+            if (this.Items.Count == 0)
+                return source.ToList();
+
             var ret = source.Where(x => this.IsMatchAll(x.Tags)).ToList();
             return ret;
         }
 
+
+        public List<Tag> AllTags()
+        {
+            var ret = new List<Tag>();
+            foreach (var item in this.Items)
+            {
+                ret.AddRange(item.AllTags());
+            }
+            return ret;
+        }
 
         private bool IsMatchAll(IEnumerable<Tag> source)
         {
@@ -155,6 +179,13 @@ namespace TestTagFolders
         public TagsUnionCondition(params InversableTag[] items)
         {
             this.Items = items.ToList();
+        }
+
+
+        public List<Tag> AllTags()
+        {
+            var ret = this.Items.Select(x => x.Tag).ToList();
+            return ret;
         }
 
         public bool IsMatch(IEnumerable<Tag> source){    
