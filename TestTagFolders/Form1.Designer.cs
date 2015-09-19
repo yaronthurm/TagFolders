@@ -29,10 +29,9 @@
         private void InitializeComponent()
         {
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
             this.tagsPanel = new TestTagFolders.TagsPanel2();
             this.filesPanel = new TestTagFolders.FilesPanel();
-            this.tagsCombinationViewer1 = new TagsCombinationViewer();
+            this.tagsCombinationViewer = new TestTagFolders.TagsCombinationViewer();
             this.SuspendLayout();
             // 
             // textBox1
@@ -42,16 +41,6 @@
             this.textBox1.Size = new System.Drawing.Size(220, 20);
             this.textBox1.TabIndex = 0;
             this.textBox1.Text = "D:\\Users\\yaron\\Desktop\\תמונות";
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(240, 81);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 2;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // tagsPanel
             // 
@@ -73,20 +62,20 @@
             // 
             // tagsCombinationViewer1
             // 
-            this.tagsCombinationViewer1.AutoScroll = true;
-            this.tagsCombinationViewer1.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            this.tagsCombinationViewer1.Location = new System.Drawing.Point(14, 12);
-            this.tagsCombinationViewer1.Name = "tagsCombinationViewer1";
-            this.tagsCombinationViewer1.Size = new System.Drawing.Size(733, 50);
-            this.tagsCombinationViewer1.TabIndex = 3;
+            this.tagsCombinationViewer.AutoScroll = true;
+            this.tagsCombinationViewer.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            this.tagsCombinationViewer.Dock = System.Windows.Forms.DockStyle.Top;
+            this.tagsCombinationViewer.Location = new System.Drawing.Point(0, 0);
+            this.tagsCombinationViewer.Name = "tagsCombinationViewer1";
+            this.tagsCombinationViewer.Size = new System.Drawing.Size(1171, 50);
+            this.tagsCombinationViewer.TabIndex = 3;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1171, 465);
-            this.Controls.Add(this.tagsCombinationViewer1);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.tagsCombinationViewer);
             this.Controls.Add(this.tagsPanel);
             this.Controls.Add(this.filesPanel);
             this.Controls.Add(this.textBox1);
@@ -103,7 +92,6 @@
         private System.Windows.Forms.TextBox textBox1;
         private FilesPanel filesPanel;
         private TagsPanel2 tagsPanel;
-        private System.Windows.Forms.Button button1;
-        private TagsCombinationViewer tagsCombinationViewer1;
+        private TagsCombinationViewer tagsCombinationViewer;
     }
 }

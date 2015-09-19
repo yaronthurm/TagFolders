@@ -14,8 +14,9 @@ namespace TestTagFolders
 {
     public partial class Form1 : Form
     {
-        private TagsIntersectionCondition _filter = new TagsIntersectionCondition();
         private List<TaggedFile> _files;
+        private TagsIntersectionCondition _filter = new TagsIntersectionCondition();
+        
 
         public Form1()
         {
@@ -26,19 +27,20 @@ namespace TestTagFolders
         {
             _files = Directory.GetFiles(this.textBox1.Text, "*.*", SearchOption.AllDirectories)
                 .Select(x => TaggedFile.Repository.GetOrCreate(x)).ToList();
+            
             this.tagsPanel.TagWasSelected += tagsPanel_TagWasSelected;
-            this.tagsCombinationViewer1.RemoveRequested += tagsCombinationViewer1_RemoveRequested;
-            this.tagsCombinationViewer1.InverseRequested += tagsCombinationViewer1_InverseRequested;
+            this.tagsCombinationViewer.RemoveRequested += tagsCombinationViewer_RemoveRequested;
+            this.tagsCombinationViewer.InverseRequested += tagsCombinationViewer_InverseRequested;
             this.ApplyFilter();
         }
 
-        private void tagsCombinationViewer1_InverseRequested(TagsCombinationViewer sender, TagsCombinationViewer.TagsCombinationViewerEventArgs e)
+        private void tagsCombinationViewer_InverseRequested(TagsCombinationViewer sender, TagsCombinationViewer.TagsCombinationViewerEventArgs e)
         {
             e.Source.Inverse = !e.Source.Inverse;
             this.ApplyFilter();
         }
 
-        private void tagsCombinationViewer1_RemoveRequested(TagsCombinationViewer sender, TagsCombinationViewer.TagsCombinationViewerEventArgs e)
+        private void tagsCombinationViewer_RemoveRequested(TagsCombinationViewer sender, TagsCombinationViewer.TagsCombinationViewerEventArgs e)
         {
             _filter.Remove(e.Source);
             this.ApplyFilter();
@@ -56,7 +58,7 @@ namespace TestTagFolders
             var filteredFiles = _filter.Apply(_files);
             this.filesPanel.PopulateFiles(filteredFiles);
             this.tagsPanel.PopulateTags(filteredFiles, _filter.AllTags());
-            this.tagsCombinationViewer1.Update(_filter);
+            this.tagsCombinationViewer.Update(_filter);
         }
 
         
