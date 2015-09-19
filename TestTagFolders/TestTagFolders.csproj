@@ -93,6 +93,12 @@
     <Compile Include="AddTagsForm.Designer.cs">
       <DependentUpon>AddTagsForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="TagsCombinationViewer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="TagsCombinationViewer.Designer.cs">
+      <DependentUpon>TagsCombinationViewer.cs</DependentUpon>
+    </Compile>
     <Compile Include="TagsPanel2.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -122,6 +128,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="AddTagsForm.resx">
       <DependentUpon>AddTagsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TagsCombinationViewer.resx">
+      <DependentUpon>TagsCombinationViewer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="TagsPanel2.resx">
       <DependentUpon>TagsPanel2.cs</DependentUpon>

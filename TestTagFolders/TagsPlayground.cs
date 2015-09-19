@@ -128,7 +128,7 @@ namespace TestTagFolders
     #region Intersection and Union
     public class TagsIntersectionCondition
     {
-        public List<TagsUnionCondition> Items;
+        private List<TagsUnionCondition> Items;
 
         public TagsIntersectionCondition()
         {
@@ -140,6 +140,15 @@ namespace TestTagFolders
             this.Items = items.ToList();
         }
 
+        public void AddUnionCondition(TagsUnionCondition condition)
+        {
+            this.Items.Add(condition);
+        }
+
+        public IEnumerable<TagsUnionCondition> UnionConditions
+        {
+            get { return this.Items.Where(x => x.Count > 0); }
+        }
 
         public List<TaggedFile> Apply(IEnumerable<TaggedFile> source)
         {
@@ -149,8 +158,7 @@ namespace TestTagFolders
             var ret = source.Where(x => this.IsMatchAll(x.Tags)).ToList();
             return ret;
         }
-
-
+        
         public List<Tag> AllTags()
         {
             var ret = new List<Tag>();
@@ -171,15 +179,32 @@ namespace TestTagFolders
             }
             return true;
         }
+
+        internal void Remove(InversableTag inversableTag)
+        {
+            foreach (var item in this.Items)
+                item.Remove(inversableTag);
+        }
     }
 
     public class TagsUnionCondition{
-        public List<InversableTag> Items;
+        private List<InversableTag> Items;
 
         public TagsUnionCondition(params InversableTag[] items)
         {
             this.Items = items.ToList();
         }
+
+        public int Count
+        {
+            get { return Items.Count; }
+        }
+
+        public IEnumerable<InversableTag> InversableTags
+        {
+            get { return this.Items; }
+        }
+
 
 
         public List<Tag> AllTags()
@@ -188,7 +213,10 @@ namespace TestTagFolders
             return ret;
         }
 
-        public bool IsMatch(IEnumerable<Tag> source){    
+        public bool IsMatch(IEnumerable<Tag> source){
+            if (this.Items.Count == 0)
+                return true;
+
             foreach (InversableTag itag in this.Items){
                 bool sourceContainsCurrent = source.Contains(itag.Tag);
                 if (itag.Inverse && !sourceContainsCurrent) 
@@ -197,6 +225,11 @@ namespace TestTagFolders
                     return true;
             }
             return false;       
+        }
+
+        internal void Remove(InversableTag inversableTag)
+        {
+            this.Items.Remove(inversableTag);
         }
     }
     #endregion

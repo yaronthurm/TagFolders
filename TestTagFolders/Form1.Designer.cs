@@ -29,43 +29,66 @@
         private void InitializeComponent()
         {
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.tagsPanel21 = new TestTagFolders.TagsPanel2();
-            this.filesPanel1 = new TestTagFolders.FilesPanel();
+            this.button1 = new System.Windows.Forms.Button();
+            this.tagsPanel = new TestTagFolders.TagsPanel2();
+            this.filesPanel = new TestTagFolders.FilesPanel();
+            this.tagsCombinationViewer1 = new TagsCombinationViewer();
             this.SuspendLayout();
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(12, 22);
+            this.textBox1.Location = new System.Drawing.Point(14, 84);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(220, 20);
             this.textBox1.TabIndex = 0;
             this.textBox1.Text = "D:\\Users\\yaron\\Desktop\\תמונות";
             // 
-            // tagsPanel21
+            // button1
             // 
-            this.tagsPanel21.BackColor = System.Drawing.Color.White;
-            this.tagsPanel21.Location = new System.Drawing.Point(12, 48);
-            this.tagsPanel21.Name = "tagsPanel21";
-            this.tagsPanel21.Size = new System.Drawing.Size(264, 322);
-            this.tagsPanel21.TabIndex = 1;
+            this.button1.Location = new System.Drawing.Point(240, 81);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 2;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // filesPanel1
+            // tagsPanel
             // 
-            this.filesPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.tagsPanel.BackColor = System.Drawing.Color.White;
+            this.tagsPanel.Location = new System.Drawing.Point(14, 110);
+            this.tagsPanel.Name = "tagsPanel";
+            this.tagsPanel.Size = new System.Drawing.Size(264, 322);
+            this.tagsPanel.TabIndex = 1;
+            // 
+            // filesPanel
+            // 
+            this.filesPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.filesPanel1.BackColor = System.Drawing.Color.White;
-            this.filesPanel1.Location = new System.Drawing.Point(282, 48);
-            this.filesPanel1.Name = "filesPanel1";
-            this.filesPanel1.Size = new System.Drawing.Size(875, 322);
-            this.filesPanel1.TabIndex = 0;
+            this.filesPanel.BackColor = System.Drawing.Color.White;
+            this.filesPanel.Location = new System.Drawing.Point(284, 110);
+            this.filesPanel.Name = "filesPanel";
+            this.filesPanel.Size = new System.Drawing.Size(875, 322);
+            this.filesPanel.TabIndex = 0;
+            // 
+            // tagsCombinationViewer1
+            // 
+            this.tagsCombinationViewer1.AutoScroll = true;
+            this.tagsCombinationViewer1.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            this.tagsCombinationViewer1.Location = new System.Drawing.Point(14, 12);
+            this.tagsCombinationViewer1.Name = "tagsCombinationViewer1";
+            this.tagsCombinationViewer1.Size = new System.Drawing.Size(733, 50);
+            this.tagsCombinationViewer1.TabIndex = 3;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1171, 465);
-            this.Controls.Add(this.tagsPanel21);
-            this.Controls.Add(this.filesPanel1);
+            this.Controls.Add(this.tagsCombinationViewer1);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.tagsPanel);
+            this.Controls.Add(this.filesPanel);
             this.Controls.Add(this.textBox1);
             this.Name = "Form1";
             this.Text = "Form1";
@@ -78,7 +101,9 @@
         #endregion
 
         private System.Windows.Forms.TextBox textBox1;
-        private FilesPanel filesPanel1;
-        private TagsPanel2 tagsPanel21;
+        private FilesPanel filesPanel;
+        private TagsPanel2 tagsPanel;
+        private System.Windows.Forms.Button button1;
+        private TagsCombinationViewer tagsCombinationViewer1;
     }
 }

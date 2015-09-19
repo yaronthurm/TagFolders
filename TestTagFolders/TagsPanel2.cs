@@ -13,8 +13,6 @@ namespace TestTagFolders
 {
     public partial class TagsPanel2 : UserControl
     {
-        private List<TaggedFile> _files;
-
         public TagsPanel2()
         {
             InitializeComponent();
@@ -23,15 +21,11 @@ namespace TestTagFolders
         public event Action<TagsPanel2, TagsPanelEventArgs> TagWasSelected;
 
 
-        public void PopulateTags(IEnumerable<TaggedFile> files)
+        public void PopulateTags(IEnumerable<TaggedFile> files, IEnumerable<Tag> filterTags)
         {
-            _files = files.ToList();
-            this.FillPanel();
-        }
+            var filesAsList = files.ToList();
 
-        private void FillPanel()
-        {
-            var allTags = _files.SelectMany(x => x.Tags);
+            var allTags = filesAsList.SelectMany(x => x.Tags);
             var tags = new Dictionary<Tag, int>();
             foreach (var tag in allTags)
             {
@@ -46,17 +40,25 @@ namespace TestTagFolders
             }
 
             this.flowLayoutPanel1.Controls.Clear();
-            
+
             foreach (var kvp in tags)
             {
+                if (kvp.Value == filesAsList.Count && filterTags.Contains(kvp.Key))
+                    continue;
+
                 var button = new Button();
                 button.Text = kvp.Key.Value + " [" + kvp.Value.ToString() + "]";
                 button.Tag = kvp.Key;
                 button.Click += button_Click;
-                if (kvp.Value == _files.Count)
+                if (kvp.Value == filesAsList.Count)
                     button.BackColor = Color.DodgerBlue;
                 this.flowLayoutPanel1.Controls.Add(button);
             }
+        }
+
+        private void FillPanel()
+        {
+            
         }
 
         private void button_Click(object sender, EventArgs e)

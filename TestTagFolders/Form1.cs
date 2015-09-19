@@ -24,26 +24,46 @@ namespace TestTagFolders
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            var files = Directory.GetFiles(this.textBox1.Text, "*.*", SearchOption.AllDirectories);
-            _files = files.Select(x => TaggedFile.Repository.GetOrCreate(x)).ToList();
-            this.filesPanel1.PopulateFiles(_files);
-            this.tagsPanel21.PopulateTags(_files);
-            this.tagsPanel21.TagWasSelected += tagsPanel21_TagWasSelected;
+            _files = Directory.GetFiles(this.textBox1.Text, "*.*", SearchOption.AllDirectories)
+                .Select(x => TaggedFile.Repository.GetOrCreate(x)).ToList();
+            this.tagsPanel.TagWasSelected += tagsPanel_TagWasSelected;
+            this.tagsCombinationViewer1.RemoveRequested += tagsCombinationViewer1_RemoveRequested;
+            this.tagsCombinationViewer1.InverseRequested += tagsCombinationViewer1_InverseRequested;
+            this.ApplyFilter();
         }
 
-        void tagsPanel21_TagWasSelected(TagsPanel2 sender, TagsPanelEventArgs args)
+        private void tagsCombinationViewer1_InverseRequested(TagsCombinationViewer sender, TagsCombinationViewer.TagsCombinationViewerEventArgs e)
         {
-            _filter = new TagsIntersectionCondition(
-               new TagsUnionCondition(InversableTag.GetTag(args.SelectedTag.Value)));
+            e.Source.Inverse = !e.Source.Inverse;
+            this.ApplyFilter();
+        }
 
+        private void tagsCombinationViewer1_RemoveRequested(TagsCombinationViewer sender, TagsCombinationViewer.TagsCombinationViewerEventArgs e)
+        {
+            _filter.Remove(e.Source);
+            this.ApplyFilter();
+        }
+
+        private void tagsPanel_TagWasSelected(TagsPanel2 sender, TagsPanelEventArgs args)
+        {
+            _filter.AddUnionCondition(new TagsUnionCondition(InversableTag.GetTag(args.SelectedTag.Value)));
+            this.ApplyFilter();
+        }
+
+
+        private void ApplyFilter()
+        {
             var filteredFiles = _filter.Apply(_files);
-            this.filesPanel1.PopulateFiles(filteredFiles);
-            this.tagsPanel21.PopulateTags(filteredFiles);
+            this.filesPanel.PopulateFiles(filteredFiles);
+            this.tagsPanel.PopulateTags(filteredFiles, _filter.AllTags());
+            this.tagsCombinationViewer1.Update(_filter);
         }
 
-        private void filesPanel1_Load(object sender, EventArgs e)
+        
+        private void button1_Click(object sender, EventArgs e)
         {
-
+            _filter = new TagsIntersectionCondition();
+            this.ApplyFilter();
         }
     }
 }
