@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
-using System.Data;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 
@@ -14,6 +9,7 @@ namespace TestTagFolders
     public partial class LargeFileWithTag : UserControl
     {
         private TaggedFile _file;
+        public event Action OnChange;
 
         public LargeFileWithTag()
         {
@@ -66,6 +62,8 @@ namespace TestTagFolders
                         button.Text = tag.Value;
                         this.panel.Controls.Add(button);
                     }
+                    if (this.OnChange != null)
+                        this.OnChange();
                 });
             addTagsForm.Show();
             addTagsForm.SetDesktopLocation(Cursor.Position.X, Cursor.Position.Y);            

@@ -1,13 +1,7 @@
-﻿using Microsoft.WindowsAPICodePack.Shell;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace TestTagFolders
@@ -31,6 +25,7 @@ namespace TestTagFolders
             this.tagsPanel.TagWasSelected += tagsPanel_TagWasSelected;
             this.tagsCombinationViewer.RemoveRequested += tagsCombinationViewer_RemoveRequested;
             this.tagsCombinationViewer.InverseRequested += tagsCombinationViewer_InverseRequested;
+            this.filesPanel.OnChange += this.ApplyFilter;
             this.ApplyFilter();
         }
 

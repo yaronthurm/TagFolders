@@ -1,11 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.WindowsAPICodePack.Shell;
 
@@ -15,6 +10,8 @@ namespace TestTagFolders
     {
         private List<TaggedFile> _files;
         private int _currentPage;
+
+        public event Action OnChange;
 
         public FilesPanel()
         {
@@ -76,7 +73,9 @@ namespace TestTagFolders
         }
 
         private void FillPanel()
-        {            
+        {
+            foreach (LargeFileWithTag item in this.flowLayoutPanel1.Controls)
+                item.OnChange -= this.OnChangeHandler;
             this.flowLayoutPanel1.Controls.Clear();
 
             int start = (_currentPage - 1) * PageSize + 1;
@@ -93,11 +92,18 @@ namespace TestTagFolders
                 var shellFile = ShellFile.FromFilePath(x.FileName);
                 shellFile.Thumbnail.FormatOption = ShellThumbnailFormatOption.Default;
                 item.SetData(shellFile.Thumbnail.MediumBitmap, x);
+                item.OnChange += this.OnChangeHandler;
                 return item;
             }).ToArray();
 
 
             this.flowLayoutPanel1.Controls.AddRange(items);
+        }
+
+        private void OnChangeHandler()
+        {
+            if (this.OnChange != null)
+                this.OnChange();
         }
 
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)

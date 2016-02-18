@@ -2,8 +2,6 @@
 using System.Linq;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Windows.Forms;
-using YaronThurm.TagFolders;
 using System.IO;
 using Newtonsoft.Json;
 
