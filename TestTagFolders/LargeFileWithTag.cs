@@ -3,6 +3,8 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using System.IO;
+using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace TestTagFolders
 {
@@ -14,8 +16,39 @@ namespace TestTagFolders
         public LargeFileWithTag()
         {
             InitializeComponent();
+            
+            foreach (Control ctrl in this.GetAllDecendentsContorls(this))
+            {
+                this.BindCtrlToMouseEnterAndMouseLeave(ctrl);
+                this.BindCtrlToMouseDoubleClick(ctrl);
+            }
         }
 
+        private IEnumerable<Control> GetAllDecendentsContorls(Control parent)
+        {
+            var ret = new List<Control>();
+            var queue = new Queue<Control>();
+            queue.Enqueue(parent);
+            while (queue.Count > 0)
+            {
+                var item = queue.Dequeue();
+                ret.Add(item);
+                foreach (Control innerControl in item.Controls)
+                    queue.Enqueue(innerControl);
+            }
+            return ret;
+        }
+
+        private void BindCtrlToMouseEnterAndMouseLeave(Control ctrl)
+        {
+            ctrl.MouseEnter += (s, e) => this.BackColor = Color.LightSkyBlue; 
+            ctrl.MouseLeave += (s, e) => this.BackColor = Color.Transparent; 
+        }
+
+        private void BindCtrlToMouseDoubleClick(Control ctrl)
+        {
+            ctrl.DoubleClick += (s, e) => Process.Start(_file.FileName);
+        }
 
         public void SetData(Bitmap thumbnail, TaggedFile file)
         {
@@ -28,22 +61,11 @@ namespace TestTagFolders
             {
                 var button = new Button();
                 button.Text = tag.Value;
+                this.BindCtrlToMouseEnterAndMouseLeave(button);
                 this.panel.Controls.Add(button);
             }
         }
 
-        
-        
-
-        private void LargeFileWithTag_MouseEnter(object sender, EventArgs e)
-        {
-            this.BackColor = Color.AliceBlue;
-        }
-
-        private void LargeFileWithTag_MouseLeave(object sender, EventArgs e)
-        {
-            this.BackColor = Color.Transparent;
-        }
 
         private void btnAddTag_Click(object sender, EventArgs e)
         {

@@ -85,8 +85,6 @@
             this.Controls.Add(this.pictureBox1);
             this.Name = "LargeFileWithTag";
             this.Size = new System.Drawing.Size(376, 94);
-            this.MouseEnter += new System.EventHandler(this.LargeFileWithTag_MouseEnter);
-            this.MouseLeave += new System.EventHandler(this.LargeFileWithTag_MouseLeave);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
