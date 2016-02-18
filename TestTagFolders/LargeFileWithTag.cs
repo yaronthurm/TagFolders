@@ -61,11 +61,18 @@ namespace TestTagFolders
             {
                 var button = new Button();
                 button.Text = tag.Value;
+                this.SetButtonWidth(button);
                 this.BindCtrlToMouseEnterAndMouseLeave(button);
                 this.panel.Controls.Add(button);
             }
         }
 
+        private void SetButtonWidth(Button btn)
+        {
+            btn.AutoSize = true;
+            btn.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            btn.AutoEllipsis = false;
+        }
 
         private void btnAddTag_Click(object sender, EventArgs e)
         {
