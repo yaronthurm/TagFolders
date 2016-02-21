@@ -67,6 +67,7 @@ namespace TestTagFolders
             if (File.Exists(_filename))
             {
                 var events = File.ReadAllLines(_filename)
+                    .Where(x => x.Trim() != "")
                     .Select(x => Newtonsoft.Json.JsonConvert.DeserializeObject<Event>(x, settings));
                 foreach (var ev in events)
                 {
