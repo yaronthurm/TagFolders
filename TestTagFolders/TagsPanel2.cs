@@ -44,6 +44,9 @@ namespace TestTagFolders
                 var button = new Button();
                 button.Text = kvp.Key.Value + " [" + kvp.Value.ToString() + "]";
                 button.Tag = kvp.Key;
+                button.AutoSize = true;
+                button.AutoEllipsis = false;
+                button.AutoSizeMode = AutoSizeMode.GrowAndShrink;
                 button.Click += button_Click;
                 if (kvp.Value == filesAsList.Count)
                     button.BackColor = Color.DodgerBlue;
