@@ -54,23 +54,26 @@ namespace TestTagFolders
         {
             _file = file;
 
+            thumbnail.MakeTransparent();
             this.pictureBox1.Image = thumbnail;
             this.lblFileName.Text = Path.GetFileName(file.FileName);
 
             foreach (var tag in file.Tags)
             {
-                var button = new Button();
-                button.Text = tag.Value;
-                this.SetButtonWidth(button);
-                this.BindCtrlToMouseEnterAndMouseLeave(button);
-                this.panel.Controls.Add(button);
+                var tagLabel = new Label();
+                tagLabel.Text = tag.Value;
+                tagLabel.BackColor = Color.Transparent;
+                tagLabel.BorderStyle = BorderStyle.FixedSingle;
+                this.SetLabelWidth(tagLabel);
+                this.BindCtrlToMouseEnterAndMouseLeave(tagLabel);
+                this.panel.Controls.Add(tagLabel);
             }
         }
 
-        private void SetButtonWidth(Button btn)
+        private void SetLabelWidth(Label btn)
         {
             btn.AutoSize = true;
-            btn.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            //btn.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             btn.AutoEllipsis = false;
         }
 
