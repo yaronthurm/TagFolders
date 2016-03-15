@@ -64,6 +64,7 @@ namespace TestTagFolders
                 tagLabel.Text = tag.Value;
                 tagLabel.BackColor = Color.Transparent;
                 tagLabel.BorderStyle = BorderStyle.FixedSingle;
+                tagLabel.Margin = new Padding(2);
                 this.SetLabelWidth(tagLabel);
                 this.BindCtrlToMouseEnterAndMouseLeave(tagLabel);
                 this.panel.Controls.Add(tagLabel);

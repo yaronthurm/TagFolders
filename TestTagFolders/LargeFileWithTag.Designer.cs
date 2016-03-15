@@ -48,10 +48,10 @@
             // lblFileName
             // 
             this.lblFileName.AutoSize = true;
-            this.lblFileName.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
-            this.lblFileName.Location = new System.Drawing.Point(99, 13);
+            this.lblFileName.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.lblFileName.Location = new System.Drawing.Point(99, 12);
             this.lblFileName.Name = "lblFileName";
-            this.lblFileName.Size = new System.Drawing.Size(80, 20);
+            this.lblFileName.Size = new System.Drawing.Size(69, 19);
             this.lblFileName.TabIndex = 1;
             this.lblFileName.Text = "File Name";
             // 
